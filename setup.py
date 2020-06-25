@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="marlin_binary_protocol",
-    version="0.0.2",
+    version="0.0.3",
     author="Charles Willis",
-    author_email="charleswillis3@outlook.com",
+    author_email="charleswillis3@users.noreply.github.com",
     description="Transfer files with Marlin 2.0 firmware using Marlin Binary Protocol Mark II",
     long_description=long_description,
     long_description_content_type="text/markdown",
