@@ -144,7 +144,18 @@ class Protocol(object):
                 self.logger.debug("Packetloss detected")
             except serial.serialutil.SerialException:
                 return
-        self.packet_transit = None    
+        self.packet_transit = None
+
+    def send_ascii_no_wait(self, data):
+        self.packet_transit = bytearray(data, 'utf8') + b'\n'
+        self.packet_status = 0
+        self.transmit_attempt = 0
+
+        try:
+            self.port.write(self.packet_transit)
+        except serial.serialutil.SerialException:
+            return
+        self.packet_transit = None 
 
     def connect(self):
         self.logger.info("Connecting: Switching Marlin to binary protocol...")
@@ -187,7 +198,8 @@ class Protocol(object):
                 if len(data):
                     self.logger.debug(data)
                     dispatch(data)
-            except OSError:
+            except OSError as exc:
+                self.logger.info(exc)
                 reconnect()
             except UnicodeDecodeError:
                 # dodgy client output or datastream corruption
@@ -409,8 +421,8 @@ class FileTransferProtocol(object):
             end = start + block_size
             self.write(data[start:end])
             kibs = (( (i+1) * block_size) / 1024) / (_millis() + 1 - start_time) * 1000
-            self.logger.info("\rPROGRESS: {0:2.2f}% {1:4.2f}KiB/s {2} Errors: {3}".format((i / blocks) * 100, kibs, "[{0:4.2f}KiB/s]".format(kibs * cratio) if compression_support else "", self.protocol.errors))
-        self.logger.info("\rPROGRESS: {0:2.2f}% {1:4.2f}KiB/s {2} Errors: {3}".format(100, kibs, "[{0:4.2f}KiB/s]".format(kibs * cratio) if compression_support else "", self.protocol.errors)) # no one likes transfers finishing at 99.8%
+            self.logger.info("PROGRESS: {0:2.2f}% {1:4.2f}KiB/s {2} Errors: {3}".format((i / blocks) * 100, kibs, "[{0:4.2f}KiB/s]".format(kibs * cratio) if compression_support else "", self.protocol.errors))
+        self.logger.info("PROGRESS: {0:2.2f}% {1:4.2f}KiB/s {2} Errors: {3}".format(100, kibs, "[{0:4.2f}KiB/s]".format(kibs * cratio) if compression_support else "", self.protocol.errors)) # no one likes transfers finishing at 99.8%
 
         self.close()
 
