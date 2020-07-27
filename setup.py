@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="marlin_binary_protocol",
-    version="0.0.4",
+    version="0.0.5",
     author="Charles Willis",
     author_email="charleswillis3@users.noreply.github.com",
     description="Transfer files with Marlin 2.0 firmware using Marlin Binary Protocol Mark II",
@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/charleswillis3/marlin-binary-protocol",
     packages=setuptools.find_packages(),
-    install_requires=["heatshrink>=0.3.2", "heatshrink2>-0.9", "pyserial>=3.4"],
+    install_requires=["heatshrink>=0.3.2", "heatshrink2>=0.9", "pyserial>=3.4"],
     classifiers=[
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
