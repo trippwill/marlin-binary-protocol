@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="marlin_binary_protocol",
-    version="0.0.5",
+    version="0.0.6",
     author="Charles Willis",
     author_email="charleswillis3@users.noreply.github.com",
     description="Transfer files with Marlin 2.0 firmware using Marlin Binary Protocol Mark II",
@@ -20,5 +20,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=2.7,>=3.7',
+    python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, *!=3.6.*, <4',
 )
